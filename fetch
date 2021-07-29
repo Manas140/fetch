@@ -16,10 +16,11 @@ main() {
   echo -e "${colors[1]} ██ $USER@$HOSTNAME${end}"
   echo -e "${colors[2]} ██ Os: $(cat /etc/*release | grep -i name | awk -F "=" '{print $2}' | sed 's/"//g' | tail -n 1 ) $(uname -m)"
   echo -e "${colors[3]} ██ Kernel: $(uname -r)" 
-  echo -e "${colors[4]} ██ Uptime: $(uptime -p | sed 's/up //' | sed 's/ hour/H/' | sed 's/ minutes/M/' | sed 's/ day/D/' )" 
+  echo -e "${colors[4]} ██ Uptime: $(uptime -p | sed 's/up //' | sed 's/ hour/H/; s/ minute/M/; s/ day/D/' )" 
   echo -e "${colors[5]} ██ Shell: $( echo $SHELL | awk -F "/" '{ print $NF}')" 
   echo -e "${colors[6]} ██ DE/WM: $XDG_CURRENT_DESKTOP" 
-  echo -e "${colors[7]} ██ Memory: $(free -m | tail -n 2 | head -n 1 | awk '{print $3 "Mib / " $2 "Mib" }' )" 
+  #used memory = total memory - available memory 
+  echo -e "${colors[7]} ██ Memory: $(free -m | awk '(NR==2){ print $2 - $7 "Mib"}') / $(free -m | tail -n 2 | head -n 1 | awk '{print $2}')Mib" 
   echo ""
 }
 
