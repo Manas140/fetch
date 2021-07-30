@@ -1,27 +1,25 @@
-#!/usr/bin/bash
+#!/bin/sh
 
 #colors
-magenta="\033[1;35m"
-green="\033[1;32m"
-white="\033[1;37m"
-blue="\033[1;34m"
-red="\033[1;31m"
-black="\033[1;40;30m"
-yellow="\033[1;33m"
-cyan="\033[1;36m"
+c1="\033[1;40;30m"
+c2="\033[1;31m"
+c3="\033[1;32m"
+c4="\033[1;33m"
+c5="\033[1;34m"
+c6="\033[1;35m"
+c7="\033[1;36m"
+c8="\033[1;37m"
 end="\033[1;0m"
-colors=( "${black}" "${red}" "${green}" "${yellow}" "${blue}" "${magenta}" "${cyan}" "${white}" )
 
 main() { 
-  echo -e "${colors[1]} ██ $USER@$HOSTNAME${end}"
-  echo -e "${colors[2]} ██ Os: $(cat /etc/*release | grep -i name | awk -F "=" '{print $2}' | sed 's/"//g' | tail -n 1 ) $(uname -m)"
-  echo -e "${colors[3]} ██ Kernel: $(uname -r)" 
-  echo -e "${colors[4]} ██ Uptime: $(uptime -p | sed 's/up //' | sed 's/ hour/H/; s/ minute/M/; s/ day/D/' )" 
-  echo -e "${colors[5]} ██ Shell: $( echo $SHELL | awk -F "/" '{ print $NF}')" 
-  echo -e "${colors[6]} ██ DE/WM: $XDG_CURRENT_DESKTOP" 
-  #used memory = total memory - available memory 
-  echo -e "${colors[7]} ██ Memory: $(free -m | awk '(NR==2){ print $2 - $7 "Mib"}') / $(free -m | tail -n 2 | head -n 1 | awk '{print $2}')Mib" 
-  echo ""
+  printf "${c2} ██ $( whoami )@$( cat /etc/hostname )${end}\n"
+  printf "${c3} ██ Os: $( cat /etc/*release | grep -i pretty_name | awk -F "=" '{print $2}' | sed 's/"//g') $(uname -m)\n"
+  printf "${c4} ██ Kernel: $( uname -r )\n"
+  printf "${c5} ██ Uptime: $( uptime | awk '{print $3}' | sed 's/,//g' ) \n"
+  printf "${c6} ██ Shell: $( echo ${SHELL##*/} )\n"
+  printf "${c7} ██ DE/WM: $XDG_CURRENT_DESKTOP\n"
+  printf "${c8} ██ Memory: $(free -m | awk '(NR==2){ print $2 - $7 "Mib"}') / $(free -m | awk '(NR==2){print $2}')Mib\n"
+  printf "\n"
 }
 
 main
