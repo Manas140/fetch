@@ -86,7 +86,7 @@ if [ "$1" != "" ]; then
       d)
         printf "${c7} DE/WM: $(Desktop)\n";;
       m)
-        printf " ${c8} Memory: $(Memory)\n";;
+        printf "${c8} Memory: $(Memory)\n";;
       \?)
         help
         break;;
