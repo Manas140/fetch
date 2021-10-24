@@ -19,7 +19,7 @@ Name() {
   read -r host < /etc/hostname;
   printf "$(whoami)@$host";
 }
-Os() { printf $NAME $(arch); }
+Os() { printf $NAME; }
 Kernel() {
   printf "$(read -r _ _ kern _ < /proc/version;
   printf $kern)";
@@ -30,10 +30,10 @@ Uptime() {
 }
 Shell() { printf "$( printf ${SHELL##*/} )"; }
 Desktop() { 
-  if type "$XDG_CURRENT_DESKTOP" >/dev/null; then
-    printf "$XDG_CURRENT_DESKTOP\n"
-  elif type "$DESKTOP_SESSION" >/dev/null; then
+    if [ "$DESKTOP_SESSION" != "" ]; then
     printf "$DESKTOP_SESSION\n"
+  elif $(type "$XDG_CURRENT_DESKTOP" >/dev/null); then
+    printf "$XDG_CURRENT_DESKTOP\n"
   else  
     for i in /proc/*/comm; do
       read -r p < "$i"
