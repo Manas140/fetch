@@ -1,7 +1,7 @@
 # fetch
 Simple system fetch utility for Linux
 <p>
-  <img src="preview.png">
+  <img src="preview.gif">
 </p>
 
 # Install
