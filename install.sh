@@ -1,15 +1,7 @@
 #!/bin/sh
 
-cr="\033[1;31m"
-cg="\033[1;32m"
-cb="\033[1;34m"
-program="fetch"
-printf "${cr}"
-
-case $1 in 
-  *u*) sudo rm -r /usr/local/bin/$program && printf "${cg}[*] $program Uninstalled\n${cr}";;
-  *i*) sudo cp $program /usr/local/bin/$program && printf "${cg}[*] $program Installed\n${cr}";;
-  *) printf "${cg}Usage: ./install.sh ${cb}[i|u]${cb}
-    i:${cg} Install
-    ${cb}u:${cg} Uninstall\n${cr}"
+case $1 in
+  *u*) sudo rm -r /usr/local/bin/fetch && printf "[*] fetch Uninstalled\n"; mkdir -p $HOME/.config/fetch;;
+  *i*) sudo cp -r fetch /usr/local/bin/fetch && printf "[*] fetch Installed\n";;
+  *) printf "Usage: ./install.sh [ -i install | -u uninstall ]\n"
 esac
