@@ -8,16 +8,21 @@ cb="\033[1;34m"
 # Colors
 c() { printf "\033[%s;%sm" "$1" "$2"; }
 
-# Import info
-. /etc/os-release
-
 # Get info functions
 Name() {
   read -r host < /etc/hostname;
   printf "%s@%s" "$USER" "$host";
 }
 
-Os() { printf "%s" "$NAME"; }
+Os() {
+  if command -v lsb_release 1>/dev/null; then 
+    os=$(lsb_release -sc);
+  else 
+    . /etc/os-release ;
+    os=$NAME;
+  fi
+  printf "%s" "$os";
+}
 
 Kernel() {
   read -r _ _ kern _ < /proc/version;
@@ -38,6 +43,7 @@ Desktop() {
     printf "%s\n" "$XDG_CURRENT_DESKTOP"
   else
     for i in /proc/*/comm; do
+      [ -f "$i" ] || continue
       read -r p < "$i"
       case "$p" in
         awesome|xmonad*|qtile|sway|i3|[bfo]*box|*wm*) printf "%s" "${p%%-*}"; break;;
