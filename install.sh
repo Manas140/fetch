@@ -2,7 +2,7 @@
 
 case $1 in
   *u*)
-    if [ "$2" = "-l" ]; then
+    if [ -f "$HOME"/.local/bin/fetch ]; then
       rm -r "$HOME"/.local/bin/fetch && printf "[*] fetch Uninstalled\n"; mkdir -p "$HOME"/.config/fetch;
     else
       sudo rm -r /usr/local/bin/fetch && printf "[*] fetch Uninstalled\n"; mkdir -p "$HOME"/.config/fetch;
@@ -16,5 +16,5 @@ case $1 in
     fi
     ;;
   *)
-    printf "Usage: ./install.sh [ -i install -l local (optional) | -u uninstall -l local (optional) ]\n"
+    printf "Usage: ./install.sh [ -i install -l local (optional) | -u uninstall ]\n"
 esac
